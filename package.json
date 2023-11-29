@@ -1,6 +1,6 @@
 {
   "name": "badgegenerator",
-  "module": "index.ts",
+  "module": "src/index.ts",
   "type": "module",
   "scripts": {
     "start": "bun run src/index.ts",
