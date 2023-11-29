@@ -5,8 +5,7 @@
   "scripts": {
     "start": "bun run index.ts",
     "dev": "bun --watch index.ts",
-    "start:prod": "bun run index.js",
-    "build": "tsc && bun build ./src/index.ts --target=bun --outfile=index.js"
+    "start:prod": "bun run index.js"
   },
   "devDependencies": {
     "bun": "^1.0.14",
