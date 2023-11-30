@@ -20,8 +20,9 @@ const responseHandler: MethodHandlersMap = {
     }),
     put: async (request: Request) => {
         return bunInstance.put(async () => {
+            const body = await request.json();
+            console.log('body -> ', body);
             try {
-                const body = await request.json();
                 
                 const query = 'UPDATE system SET coverage = $1 WHERE id = $2 RETURNING *';
                 const result = await connection.query(query, [body.coverage, body.id]);
@@ -32,7 +33,7 @@ const responseHandler: MethodHandlersMap = {
                     throw new Error(`Sistema com ID ${body.id} não encontrado`);
                 }
             } catch (error) {
-                return new Response('Erro interno do servidor!', { status: 500 })
+                return new Response('Erro interno do servidor! ' + body, { status: 500 })
             }
             
         })
