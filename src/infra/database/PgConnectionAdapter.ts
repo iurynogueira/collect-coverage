@@ -24,6 +24,8 @@ export class PgConnectionAdapter implements Connection {
       return await this.pgClient.query(sql, values);
     } catch (error) {
       throw error;
+    } finally {
+      this.close();
     }
   }
 }

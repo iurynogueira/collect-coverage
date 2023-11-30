@@ -11,7 +11,7 @@ interface MethodHandlersMap {
 type MethodHandler = 'get' | 'post' | 'put'
 
 const bunInstance = BunServe.getInstance;
-const connection = new PgConnectionAdapter();
+let connection: PgConnectionAdapter;
 
 const responseHandler: MethodHandlersMap = {
     get: bunInstance.get.bind(bunInstance, async () => {
@@ -21,7 +21,6 @@ const responseHandler: MethodHandlersMap = {
     put: async (request: Request) => {
         return bunInstance.put(async () => {
             const body = await request.json();
-            console.log('body -> ', body);
             try {
                 
                 const query = 'UPDATE system SET coverage = $1 WHERE id = $2 RETURNING *';
@@ -64,6 +63,7 @@ const server = Bun.serve({
     async fetch(request: Request) {
         const url = new URL(request.url)
         const method = request.method.toLocaleLowerCase() as MethodHandler
+        connection = new PgConnectionAdapter();
 
         if (url.pathname === '/systems') {
             return responseHandler[method as MethodHandler](request)
